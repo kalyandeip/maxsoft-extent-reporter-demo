@@ -1,17 +1,17 @@
 # Use official Maven image with JDK 8 installed
-FROM maven:3.8.7-openjdk-8
+FROM maven:3.8.7-eclipse-temurin-8
 
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy the entire project to the container
+# Copy the project files into the container
 COPY . .
 
-# Optional: Download dependencies (faster builds)
+# Optional: Resolve dependencies first (faster incremental builds)
 RUN mvn dependency:resolve
 
-# Compile the project, skipping tests
+# Compile the project (skip tests)
 RUN mvn clean compile -DskipTests
 
-# Default command if someone runs the container
+# Default command
 CMD ["mvn", "test"]
